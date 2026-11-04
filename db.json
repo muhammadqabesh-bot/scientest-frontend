@@ -10,5 +10,133 @@
     "payments": "المدفوعات",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج"
+  },
+
+  "dashboard": {
+    "stats": [
+      {
+        "id": "students",
+        "icon": "Users",
+        "labelKey": "dashboard.stats.students",
+        "value": 248,
+        "change": "+12%",
+        "noteKey": "dashboard.stats.vsLastMonth"
+      },
+      {
+        "id": "teachers",
+        "icon": "GraduationCap",
+        "labelKey": "dashboard.stats.teachers",
+        "value": 18,
+        "change": "+6%",
+        "noteKey": "dashboard.stats.teachingTeam"
+      },
+      {
+        "id": "courses",
+        "icon": "BookOpen",
+        "labelKey": "dashboard.stats.courses",
+        "value": 12,
+        "change": "+2",
+        "noteKey": "dashboard.stats.activePrograms"
+      },
+      {
+        "id": "classes",
+        "icon": "CalendarDays",
+        "labelKey": "dashboard.stats.classesToday",
+        "value": 6,
+        "change": "2",
+        "noteKey": "dashboard.stats.remaining"
+      }
+    ],
+    "quickActions": [
+      {
+        "id": "addStudent",
+        "icon": "UserRoundPlus",
+        "titleKey": "dashboard.quickActions.addStudent.title",
+        "descriptionKey": "dashboard.quickActions.addStudent.description"
+      },
+      {
+        "id": "addTeacher",
+        "icon": "GraduationCap",
+        "titleKey": "dashboard.quickActions.addTeacher.title",
+        "descriptionKey": "dashboard.quickActions.addTeacher.description"
+      },
+      {
+        "id": "createGroup",
+        "icon": "UsersRound",
+        "titleKey": "dashboard.quickActions.createGroup.title",
+        "descriptionKey": "dashboard.quickActions.createGroup.description"
+      },
+      {
+        "id": "recordPayment",
+        "icon": "CreditCard",
+        "titleKey": "dashboard.quickActions.recordPayment.title",
+        "descriptionKey": "dashboard.quickActions.recordPayment.description"
+      }
+    ],
+    "schedule": [
+      {
+        "id": 1,
+        "time": "09:00 AM",
+        "course": "Web Development",
+        "teacher": "Ahmad Ali",
+        "room": "Lab 1"
+      },
+      {
+        "id": 2,
+        "time": "11:30 AM",
+        "course": "Data Structures",
+        "teacher": "Sarah Nour",
+        "room": "Room 204"
+      },
+      {
+        "id": 3,
+        "time": "02:00 PM",
+        "course": "UI/UX Design",
+        "teacher": "Omar Khaled",
+        "room": "Lab 3"
+      },
+      {
+        "id": 4,
+        "time": "04:30 PM",
+        "course": "Database Systems",
+        "teacher": "Rami Hassan",
+        "room": "Lab 2"
+      }
+    ],
+    "activities": [
+      {
+        "id": 1,
+        "initials": "KT",
+        "tone": "green",
+        "titleKey": "dashboard.activities.studentRegistered",
+        "name": "Kareem Tamer",
+        "detailKey": "dashboard.activities.joinedCourse",
+        "course": "Full Stack Course",
+        "timeKey": "dashboard.activities.minutesAgo",
+        "timeValue": 10
+      },
+      {
+        "id": 2,
+        "initials": "$$",
+        "tone": "gold",
+        "titleKey": "dashboard.activities.paymentReceived",
+        "name": "$150.00",
+        "detailKey": "dashboard.activities.paymentFrom",
+        "student": "Layla Hassan",
+        "timeKey": "dashboard.activities.minutesAgo",
+        "timeValue": 35
+      },
+      {
+        "id": 3,
+        "initials": "GR",
+        "tone": "gray",
+        "titleKey": "dashboard.activities.groupCreated",
+        "name": "React Next Batch-4",
+        "detailKey": "dashboard.activities.assignedTo",
+        "teacher": "T. Ahmad",
+        "timeKey": "dashboard.activities.hoursAgo",
+        "timeValue": 2
+      }
+    ]
   }
 }

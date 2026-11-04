@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import SideBar from "./SideBar";
 import Header from "./Header";
+import Dashboard from "./Dashboard";
 
 const Admin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -16,7 +17,9 @@ const Admin = () => {
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
 
         <main className="flex-1 p-4 lg:p-6">
-          <div className="mx-auto max-w-7xl"></div>
+          <div className="mx-auto max-w-7xl">
+            <Dashboard/>
+          </div>
         </main>
       </div>
     </div>

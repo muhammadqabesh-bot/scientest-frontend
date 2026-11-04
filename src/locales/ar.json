@@ -28,5 +28,67 @@
     "profile": "الملف الشخصي",
     "user_name": "أحمد محمود",
     "user_role": "مدير النظام"
+  },
+
+  "dashboard": {
+    "welcome": "مرحبًا بعودتك",
+    "welcomeDescription": "إليك نظرة سريعة على ما يجري في معهدك اليوم.",
+    "quickActionsHeading": "إجراءات سريعة",
+    "quickActionsDescription": "الإجراءات الأكثر استخدامًا",
+    "todaySchedule": "جدول اليوم",
+    "scheduleDescription": "الحصص المجدولة للمعهد",
+    "recentActivity": "النشاط الأخير",
+    "recentActivityDescription": "آخر المستجدات في المعهد",
+    "viewAll": "عرض الكل",
+    "table": {
+      "time": "الوقت",
+      "course": "الدورة",
+      "teacher": "المعلم",
+      "room": "القاعة"
+    },
+    "stats": {
+      "students": "إجمالي الطلاب",
+      "teachers": "إجمالي المعلمين",
+      "courses": "إجمالي الدورات",
+      "classesToday": "حصص اليوم",
+      "vsLastMonth": "مقارنة بالشهر الماضي",
+      "teachingTeam": "فريق التدريس",
+      "activePrograms": "برامج تعليمية نشطة",
+      "remaining": "حصص متبقية"
+    },
+    "quickActions": {
+      "addStudent": {
+        "title": "إضافة طالب",
+        "description": "تسجيل طالب جديد"
+      },
+      "addTeacher": {
+        "title": "إضافة معلم",
+        "description": "إضافة معلم جديد"
+      },
+      "createGroup": {
+        "title": "إنشاء مجموعة",
+        "description": "تنظيم مجموعة طلابية"
+      },
+      "recordPayment": {
+        "title": "تسجيل دفعة",
+        "description": "تسجيل دفعة طالب"
+      }
+    },
+    "activities": {
+      "studentRegistered": "تسجيل طالب جديد:",
+      "joinedCourse": "انضم إلى دورة {{course}}",
+      "paymentReceived": "تم استلام دفعة:",
+      "paymentFrom": "من {{student}} (رسوم الدورة)",
+      "groupCreated": "تم إنشاء مجموعة:",
+      "assignedTo": "أُسندت إلى {{teacher}}",
+      "minutesAgo": "منذ {{count}} دقيقة",
+      "hoursAgo": "منذ {{count}} ساعة"
+    },
+    "states": {
+      "loading": "جارٍ تحميل بيانات الداشبورد...",
+      "error": "تعذر تحميل بيانات الداشبورد.",
+      "retry": "حاول مرة أخرى",
+      "empty": "لا توجد بيانات للعرض."
+    }
   }
 }
