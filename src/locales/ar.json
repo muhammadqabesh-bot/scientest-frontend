@@ -1,0 +1,32 @@
+{
+  "sidebar": {
+    "brand": "Scientest",
+    "subtitle": "إدارة المعهد",
+    "main_menu": "القائمة الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "students": "الطلاب",
+    "teachers": "المعلمون",
+    "courses": "الدورات",
+    "groups": "المجموعات",
+    "payments": "المدفوعات",
+    "settings": "الإعدادات",
+    "open_menu": "فتح القائمة",
+    "close_menu": "إغلاق القائمة",
+    "logout": "تسجيل الخروج",
+    "status_good": "يومك يسير بشكل جيد"
+  },
+  "navbar": {
+    "search_placeholder": "ابحث عن طالب، دورة، معلم...",
+    "admin_name": "أحمد محمود",
+    "admin_role": "مدير النظام"
+  },
+  "header": {
+    "open_menu": "فتح القائمة",
+    "search_placeholder": "ابحث عن طالب، معلم...",
+    "search_aria": "البحث",
+    "notifications": "الإشعارات",
+    "profile": "الملف الشخصي",
+    "user_name": "أحمد محمود",
+    "user_role": "مدير النظام"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "sidebar": {
+    "brand": "Scientest",
+    "subtitle": "إدارة المعهد",
+    "dashboard": "لوحة التحكم",
+    "students": "الطلاب",
+    "teachers": "المعلمون",
+    "courses": "الدورات",
+    "groups": "المجموعات",
+    "payments": "المدفوعات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  }
+}

@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-950: #0d261e;
+  --color-primary-900: #113228;
+  --color-primary-800: #173b2f;
+  --color-primary-700: #1d4638;
+  --color-primary-600: #2b5c4b;
+  --color-accent-600: #b88938;
+  --color-accent-500: #d4a853;
+  --color-accent-100: #f3ece0;
+  --color-accent-50: #f8f4ec;
+
+  --color-bg-main: #f8f7f3;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fcfbf9;
+
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted: #a8a29e;
+
+  --color-border-subtle: #ebe8e1;
+  --color-border-focus: #86efac;
+
+  --color-status-success: #10b981;
+  --color-status-success-bg: #e6f4ea;
+  --color-status-success-text: #137333;
+
+  --color-danger: #ef4444;
+  --color-danger-bg: #fef2f2;
+
+  --shadow-card:
+    0 1px 3px 0 rgba(28, 25, 23, 0.03), 0 1px 2px -1px rgba(28, 25, 23, 0.03);
+  --shadow-card-hover:
+    0 10px 25px -5px rgba(28, 25, 23, 0.06),
+    0 8px 10px -6px rgba(28, 25, 23, 0.04);
+
+  --font-sans: "IBM Plex Sans Arabic", "Plus Jakarta Sans", sans-serif;
+  --font-display: "Plus Jakarta Sans", "IBM Plex Sans Arabic", sans-serif;
+
+
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+}
