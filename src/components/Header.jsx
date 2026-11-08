@@ -30,6 +30,8 @@ function getDateTime() {
 }
 
 export default function Header({ onMenuClick }) {
+
+
   const { t } = useTranslation();
   const [dateTime, setDateTime] = useState(getDateTime);
 

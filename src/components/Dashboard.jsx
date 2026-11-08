@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   animate,
@@ -18,170 +18,110 @@ import {
 } from "lucide-react";
 
 import Card from "./ui/Card";
+import { useSchedule } from "../Hooks/useSchedule";
+import { useTeachers } from "../Hooks/useTeachers";
+import { useCourses } from "../Hooks/useCourses";
+import { useStudents } from "../Hooks/useStudents";
+import { p } from "motion/react-client";
 
-/*
-  بيانات تجريبية للواجهة فقط.
+/* إعداد الكروت الثابت: الرقم (value) يُحسب داخل المكوّن من البيانات */
+const statsConfig = [
+  {
+    id: "students",
+    icon: "Users",
+    labelKey: "dashboard.stats.students",
+    noteKey: "dashboard.stats.vsLastMonth",
+  },
+  {
+    id: "teachers",
+    icon: "GraduationCap",
+    labelKey: "dashboard.stats.teachers",
+    noteKey: "dashboard.stats.teachingTeam",
+  },
+  {
+    id: "courses",
+    icon: "BookOpen",
+    labelKey: "dashboard.stats.courses",
+    noteKey: "dashboard.stats.activePrograms",
+  },
+  {
+    id: "classes",
+    icon: "CalendarDays",
+    labelKey: "dashboard.stats.classesToday",
+    noteKey: "dashboard.stats.remaining",
+  },
+];
 
-  TODO (أنت): استبدل demoData لاحقًا ببيانات الـAPI.
-  TODO (أنت): أضف حالة loading و error ومعالجة الأخطاء عند ربط الباك إند.
-*/
-const demoData = {
-  stats: [
-    {
-      id: "students",
-      icon: "Users",
-      labelKey: "dashboard.stats.students",
-      value: 248,
-      change: "+12%",
-      noteKey: "dashboard.stats.vsLastMonth",
-    },
-    {
-      id: "teachers",
-      icon: "GraduationCap",
-      labelKey: "dashboard.stats.teachers",
-      value: 18,
-      change: "+6%",
-      noteKey: "dashboard.stats.teachingTeam",
-    },
-    {
-      id: "courses",
-      icon: "BookOpen",
-      labelKey: "dashboard.stats.courses",
-      value: 12,
-      change: "+2",
-      noteKey: "dashboard.stats.activePrograms",
-    },
-    {
-      id: "classes",
-      icon: "CalendarDays",
-      labelKey: "dashboard.stats.classesToday",
-      value: 6,
-      change: "2",
-      noteKey: "dashboard.stats.remaining",
-    },
-  ],
+/* الإجراءات السريعة: عناصر ثابتة في الواجهة وليست بيانات سيرفر */
+const quickActions = [
+  {
+    id: "addStudent",
+    icon: "UserRoundPlus",
+    titleKey: "dashboard.quickActions.addStudent.title",
+    descriptionKey: "dashboard.quickActions.addStudent.description",
+  },
+  {
+    id: "addTeacher",
+    icon: "GraduationCap",
+    titleKey: "dashboard.quickActions.addTeacher.title",
+    descriptionKey: "dashboard.quickActions.addTeacher.description",
+  },
+  {
+    id: "createGroup",
+    icon: "UsersRound",
+    titleKey: "dashboard.quickActions.createGroup.title",
+    descriptionKey: "dashboard.quickActions.createGroup.description",
+  },
+  {
+    id: "recordPayment",
+    icon: "CreditCard",
+    titleKey: "dashboard.quickActions.recordPayment.title",
+    descriptionKey: "dashboard.quickActions.recordPayment.description",
+  },
+];
 
-  quickActions: [
-    {
-      id: "addStudent",
-      icon: "UserRoundPlus",
-      titleKey: "dashboard.quickActions.addStudent.title",
-      descriptionKey: "dashboard.quickActions.addStudent.description",
-    },
-    {
-      id: "addTeacher",
-      icon: "GraduationCap",
-      titleKey: "dashboard.quickActions.addTeacher.title",
-      descriptionKey: "dashboard.quickActions.addTeacher.description",
-    },
-    {
-      id: "createGroup",
-      icon: "UsersRound",
-      titleKey: "dashboard.quickActions.createGroup.title",
-      descriptionKey: "dashboard.quickActions.createGroup.description",
-    },
-    {
-      id: "recordPayment",
-      icon: "CreditCard",
-      titleKey: "dashboard.quickActions.recordPayment.title",
-      descriptionKey: "dashboard.quickActions.recordPayment.description",
-    },
-  ],
+/* TODO (أنت): النشاط الأخير ما زال وهميًا، اربطه بـ useActivities لاحقًا */
+const demoActivities = [
+  {
+    id: 1,
+    initials: "كت",
+    tone: "green",
+    titleKey: "dashboard.activities.studentRegistered",
+    name: "كريم تمر",
+    detailKey: "dashboard.activities.joinedCourse",
+    detailValues: { course: "تطوير الويب الشامل" },
+    timeKey: "dashboard.activities.minutesAgo",
+    timeValues: { count: 10 },
+  },
+  {
+    id: 2,
+    initials: "$$",
+    tone: "gold",
+    titleKey: "dashboard.activities.paymentReceived",
+    name: "$150.00",
+    detailKey: "dashboard.activities.paymentFrom",
+    detailValues: { student: "ليلى حسن" },
+    timeKey: "dashboard.activities.minutesAgo",
+    timeValues: { count: 35 },
+  },
+  {
+    id: 3,
+    initials: "مج",
+    tone: "gray",
+    titleKey: "dashboard.activities.groupCreated",
+    name: "React Next-4",
+    detailKey: "dashboard.activities.assignedTo",
+    detailValues: { teacher: "أحمد محمود" },
+    timeKey: "dashboard.activities.hoursAgo",
+    timeValues: { count: 2 },
+  },
+];
 
-  schedule: [
-    {
-      id: 1,
-      range: "today",
-      time: "09:00 ص",
-      course: "تطوير الويب",
-      teacher: "أحمد علي",
-      room: "مختبر ١",
-    },
-    {
-      id: 2,
-      range: "today",
-      time: "11:30 ص",
-      course: "هياكل البيانات",
-      teacher: "سارة نور",
-      room: "قاعة ٢٠٤",
-    },
-    {
-      id: 3,
-      range: "today",
-      time: "02:00 م",
-      course: "تصميم تجربة المستخدم",
-      teacher: "عمر خالد",
-      room: "مختبر ٣",
-    },
-    {
-      id: 4,
-      range: "today",
-      time: "04:30 م",
-      course: "قواعد البيانات",
-      teacher: "رامي حسن",
-      room: "مختبر ٢",
-    },
-    {
-      id: 5,
-      range: "week",
-      time: "10:00 ص",
-      course: "أساسيات البرمجة",
-      teacher: "منى ياسين",
-      room: "قاعة ١٠٢",
-    },
-    {
-      id: 6,
-      range: "week",
-      time: "01:00 م",
-      course: "تطوير الواجهات",
-      teacher: "أحمد علي",
-      room: "مختبر ١",
-    },
-    {
-      id: 7,
-      range: "week",
-      time: "03:30 م",
-      course: "مهارات العرض",
-      teacher: "سارة نور",
-      room: "قاعة ٢٠٤",
-    },
-  ],
-
-  activities: [
-    {
-      id: 1,
-      initials: "كت",
-      tone: "green",
-      titleKey: "dashboard.activities.studentRegistered",
-      name: "كريم تمر",
-      detailKey: "dashboard.activities.joinedCourse",
-      detailValues: { course: "تطوير الويب الشامل" },
-      timeKey: "dashboard.activities.minutesAgo",
-      timeValues: { count: 10 },
-    },
-    {
-      id: 2,
-      initials: "$$",
-      tone: "gold",
-      titleKey: "dashboard.activities.paymentReceived",
-      name: "$150.00",
-      detailKey: "dashboard.activities.paymentFrom",
-      detailValues: { student: "ليلى حسن" },
-      timeKey: "dashboard.activities.minutesAgo",
-      timeValues: { count: 35 },
-    },
-    {
-      id: 3,
-      initials: "مج",
-      tone: "gray",
-      titleKey: "dashboard.activities.groupCreated",
-      name: "React Next-4",
-      detailKey: "dashboard.activities.assignedTo",
-      detailValues: { teacher: "أحمد محمود" },
-      timeKey: "dashboard.activities.hoursAgo",
-      timeValues: { count: 2 },
-    },
-  ],
+/* ألوان أيقونات النشاط حسب النوع */
+const toneClasses = {
+  green: "bg-status-success-bg text-status-success-text",
+  gold: "bg-accent-50 text-accent-600",
+  gray: "bg-border-subtle text-text-secondary",
 };
 
 const iconMap = {
@@ -276,18 +216,38 @@ export default function Dashboard() {
   const prefersReducedMotion = useReducedMotion();
   const reduceMotion = Boolean(prefersReducedMotion);
 
-  /*
-    TODO (أنت): بعد ربط الـAPI، خذ هذه البيانات من state بدل demoData.
-    TODO (أنت): أضف هنا واجهات التحميل والخطأ إذا احتجتها.
-  */
-  const stats = demoData.stats;
-  const quickActions = demoData.quickActions;
-  const schedule = demoData.schedule;
-  const activities = demoData.activities;
+  const today = new Date()
+    .toLocaleDateString("er", { weekday: "long" })
+    .toLowerCase();
 
-  const [unused] = []; // احذف هذا السطر عند إضافة useState للجدول
+  const { data: schedule = [], isLoading, isError } = useSchedule(today);
+  const { data: courses = [] } = useCourses();
+  const { data: teachers = [] } = useTeachers();
+  const { data: students = [] } = useStudents();
 
-  const visibleSchedule = schedule.filter((item) => item.range === "today");
+  /* الأرقام تُحسب من البيانات الفعلية */
+  const counts = {
+    students: students.length,
+    teachers: teachers.length,
+    courses: courses.length,
+    classes: schedule.length,
+  };
+
+  const stats = statsConfig.map((item) => ({
+    ...item,
+    value: counts[item.id],
+  }));
+
+  /* قواميس بحث سريعة لتحويل الـ id إلى كائن (اسم الدورة / المعلم) */
+  const coursesById = useMemo(
+    () => new Map(courses.map((course) => [String(course.id), course])),
+    [courses],
+  );
+
+  const teachersById = useMemo(
+    () => new Map(teachers.map((teacher) => [String(teacher.id), teacher])),
+    [teachers],
+  );
 
   const cardMotion = reduceMotion ? reducedItemVariants : itemVariants;
 
@@ -308,17 +268,17 @@ export default function Dashboard() {
         className="flex flex-wrap items-end justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-[#21312e]">
+          <h1 className="text-2xl font-bold text-text-primary">
             {t("dashboard.welcome")}
           </h1>
 
-          <p className="mt-2 text-sm text-[#7a8582]">
+          <p className="mt-2 text-sm text-text-secondary">
             {t("dashboard.welcomeDescription")}
           </p>
         </div>
       </motion.section>
 
-      {/* بطاقات الإحصاءات: تدخل بالتتابع والأرقام تعدّ عند فتح الصفحة */}
+      {/* كروت الإحصائيات */}
       <motion.section
         variants={reduceMotion ? undefined : statsStagger}
         initial={reduceMotion ? false : "hidden"}
@@ -338,52 +298,46 @@ export default function Dashboard() {
               <Card
                 variant="default"
                 size="md"
-                className="group h-full border border-gray-100 transition-all duration-300 hover:border-[#b89b53]/40 hover:shadow-lg"
+                className="group h-full border border-border-subtle transition-all duration-300 hover:border-accent-600/40 hover:shadow-card-hover"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#f6f2e7] text-[#b89b53] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#efe8d5] group-hover:text-[#967b38]">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-50 text-accent-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-accent-100">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
 
-                  <span className="text-xs font-semibold tracking-wide text-[#7a8582]">
+                  <span className="text-xs font-semibold tracking-wide text-text-secondary">
                     {t(stat.labelKey)}
                   </span>
                 </div>
 
-                <p className="mt-4 text-3xl font-bold text-[#103b31] transition-colors duration-300 group-hover:text-[#21614f]">
+                <p className="mt-4 text-3xl font-bold text-primary-800 transition-colors duration-300 group-hover:text-primary-600">
                   <AnimatedNumber
                     value={stat.value}
                     reduceMotion={reduceMotion}
                   />
                 </p>
 
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="rounded-full bg-[#e8f5ec] px-2 py-1 text-xs font-semibold text-[#397652]">
-                    {stat.change}
-                  </span>
-
-                  <span className="text-xs text-[#87918d]">
-                    {t(stat.noteKey)}
-                  </span>
-                </div>
+                <p className="mt-3 text-xs text-text-muted">
+                  {t(stat.noteKey)}
+                </p>
               </Card>
             </motion.div>
           );
         })}
       </motion.section>
 
-      {/* الإجراءات السريعة: الأيقونة تتحرك وزر + يتغير لونه عند التحويم */}
+      {/* الإجراءات السريعة */}
       <motion.section
         variants={reduceMotion ? undefined : actionsStagger}
         initial={reduceMotion ? false : "hidden"}
         animate="visible"
       >
         <div className="mb-4">
-          <h2 className="text-lg font-semibold text-[#21312e]">
+          <h2 className="text-lg font-semibold text-text-primary">
             {t("dashboard.quickActionsHeading")}
           </h2>
 
-          <p className="mt-1 text-sm text-[#7a8582]">
+          <p className="mt-1 text-sm text-text-secondary">
             {t("dashboard.quickActionsDescription")}
           </p>
         </div>
@@ -404,28 +358,25 @@ export default function Dashboard() {
                   size="md"
                   className="group h-full w-full text-right"
                 >
-                  {/*
-                    TODO (أنت): أضف onClick هنا إذا أردت فتح المودال
-                    أو تنفيذ إجراء سريع.
-                  */}
+                  {/* TODO (أنت): أضف onClick هنا لفتح المودال المناسب */}
                   <div className="flex items-center gap-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#f6f2e7] text-[#b89b53] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-[#efe8d5]">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-600 transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-accent-100">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
 
                     <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-[#21312e]">
+                      <span className="block text-sm font-semibold text-text-primary">
                         {t(action.titleKey)}
                       </span>
 
-                      <span className="mt-1 block text-xs text-[#87918d]">
+                      <span className="mt-1 block text-xs text-text-muted">
                         {t(action.descriptionKey)}
                       </span>
                     </span>
 
                     <span
                       aria-hidden="true"
-                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-gray-200 bg-white text-[#53605b] transition-all duration-300 group-hover:border-[#103b31] group-hover:bg-[#103b31] group-hover:text-white"
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-border-subtle bg-surface text-text-secondary transition-all duration-300 group-hover:border-primary-800 group-hover:bg-primary-800 group-hover:text-white"
                     >
                       +
                     </span>
@@ -449,82 +400,84 @@ export default function Dashboard() {
           <Card size="md" className="h-full">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h2 className="font-semibold text-[#21312e]">
+                <h2 className="font-semibold text-text-primary">
                   {t("dashboard.todaySchedule")}
                 </h2>
 
-                <p className="mt-1 text-xs text-[#87918d]">
+                <p className="mt-1 text-xs text-text-muted">
                   {t("dashboard.scheduleDescription")}
                 </p>
               </div>
-
-              {/* تحكم محلي بالعرض التجريبي؛ لا يستدعي API */}
-              <select
-                aria-label="نطاق عرض الجدول"
-                className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs text-[#53605b] outline-none transition-colors focus:border-[#b89b53]"
-                defaultValue="today"
-                onChange={(event) => {
-                  /*
-                    TODO (أنت): اربط اختيار النطاق بالبيانات القادمة من API.
-                    حاليًا هذا العنصر للعرض فقط.
-                  */
-                }}
-              >
-                <option value="today">اليوم</option>
-                <option value="week">هذا الأسبوع</option>
-              </select>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[520px] text-right text-sm">
-                <thead className="text-xs text-[#87918d]">
-                  <tr className="border-b border-gray-100">
-                    <th className="px-2 py-3 font-medium">
-                      {t("dashboard.table.time")}
-                    </th>
-                    <th className="px-2 py-3 font-medium">
-                      {t("dashboard.table.course")}
-                    </th>
-                    <th className="px-2 py-3 font-medium">
-                      {t("dashboard.table.teacher")}
-                    </th>
-                    <th className="px-2 py-3 font-medium">
-                      {t("dashboard.table.room")}
-                    </th>
-                  </tr>
-                </thead>
+            {isLoading && (
+              <p className="py-6 text-center text-sm text-text-muted">
+                جارٍ التحميل...
+              </p>
+            )}
 
-                <tbody>
-                  {visibleSchedule.map((item) => (
-                    <tr
-                      key={item.id}
-                      className="border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50/70"
-                    >
-                      <td
-                        dir="ltr"
-                        className="px-2 py-3 text-right font-medium text-[#a48a47]"
-                      >
-                        {item.time}
-                      </td>
-
-                      <td className="px-2 py-3 text-[#35443f]">
-                        {item.course}
-                      </td>
-
-                      <td className="px-2 py-3 text-[#7a8582]">
-                        {item.teacher}
-                      </td>
-
-                      <td className="px-2 py-3">
-                        <span className="rounded-md border border-gray-200 px-2 py-1 text-xs text-[#7a8582]">
-                          {item.room}
-                        </span>
-                      </td>
+            {isError && (
+              <p className="py-6 text-center text-sm text-danger">
+                تعذّر تحميل الجدول
+              </p>
+            )}
+            {!isLoading && !isError && schedule.length === 0 && (
+              <p className="py-6 text-center text-sm text-text-muted">
+                لا يوجد حصص اليوم
+              </p>
+            )}
+            {!isLoading && !isError && schedule.length > 0 && (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[520px] text-right text-sm">
+                  <thead className="text-xs text-text-muted">
+                    <tr className="border-b border-border-subtle">
+                      <th className="px-2 py-3 font-medium">
+                        {t("dashboard.table.time")}
+                      </th>
+                      <th className="px-2 py-3 font-medium">
+                        {t("dashboard.table.course")}
+                      </th>
+                      <th className="px-2 py-3 font-medium">
+                        {t("dashboard.table.teacher")}
+                      </th>
+                      <th className="px-2 py-3 font-medium">
+                        {t("dashboard.table.room")}
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {schedule.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="border-b border-border-subtle transition-colors last:border-0 hover:bg-surface-hover"
+                      >
+                        <td
+                          dir="ltr"
+                          className="px-2 py-3 text-right font-medium text-accent-600"
+                        >
+                          {item.time}
+                        </td>
+
+                        <td className="px-2 py-3 text-text-primary">
+                          {coursesById.get(String(item.courseId))?.name ?? "—"}
+                        </td>
+
+                        <td className="px-2 py-3 text-text-secondary">
+                          {teachersById.get(String(item.teacherId))?.name ??
+                            "—"}
+                        </td>
+
+                        <td className="px-2 py-3">
+                          <span className="rounded-md border border-border-subtle px-2 py-1 text-xs text-text-secondary">
+                            {item.room}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </Card>
         </motion.div>
 
@@ -533,57 +486,50 @@ export default function Dashboard() {
           <Card size="md" className="h-full">
             <div className="mb-3 flex items-start justify-between gap-3">
               <div>
-                <h2 className="font-semibold text-[#21312e]">
+                <h2 className="font-semibold text-text-primary">
                   {t("dashboard.recentActivity")}
                 </h2>
 
-                <p className="mt-1 text-xs text-[#87918d]">
+                <p className="mt-1 text-xs text-text-muted">
                   {t("dashboard.recentActivityDescription")}
                 </p>
               </div>
 
-              {/* TODO (أنت): أضف وظيفة هذا الزر بنفسك إذا احتجتها */}
+              {/* TODO (أنت): أضف وظيفة هذا الزر */}
               <button
                 type="button"
-                className="text-xs font-medium text-[#a28743] transition-colors hover:text-[#80682d]"
+                className="text-xs font-medium text-accent-600 transition-colors hover:text-primary-700"
               >
                 {t("dashboard.viewAll")}
               </button>
             </div>
 
-            <ul className="divide-y divide-gray-100">
-              {activities.map((activity) => (
+            <ul className="divide-y divide-border-subtle">
+              {demoActivities.map((activity) => (
                 <li
                   key={activity.id}
                   className="flex items-center gap-3 py-3 first:pt-2 last:pb-0"
                 >
                   <span
-                    className={[
-                      "grid h-10 w-10 shrink-0 place-items-center rounded-xl text-xs font-semibold",
-                      activity.tone === "gold"
-                        ? "bg-[#f6f2e7] text-[#9a813d]"
-                        : activity.tone === "gray"
-                          ? "bg-gray-100 text-gray-600"
-                          : "bg-[#e4f8eb] text-[#365548]",
-                    ].join(" ")}
+                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-xs font-semibold ${toneClasses[activity.tone] ?? toneClasses.gray}`}
                   >
                     {activity.initials}
                   </span>
 
                   <span className="min-w-0 flex-1">
-                    <span className="block text-sm text-[#53605b]">
+                    <span className="block text-sm text-text-secondary">
                       {t(activity.titleKey)}{" "}
-                      <strong className="font-semibold text-[#30453d]">
+                      <strong className="font-semibold text-text-primary">
                         {activity.name}
                       </strong>
                     </span>
 
-                    <span className="mt-1 block text-xs text-[#87918d]">
+                    <span className="mt-1 block text-xs text-text-muted">
                       {t(activity.detailKey, activity.detailValues)}
                     </span>
                   </span>
 
-                  <span className="shrink-0 text-xs text-[#9aa39f]">
+                  <span className="shrink-0 text-xs text-text-muted">
                     {t(activity.timeKey, activity.timeValues)}
                   </span>
                 </li>
