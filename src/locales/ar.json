@@ -77,6 +77,8 @@
     "activities": {
       "studentRegistered": "تسجيل طالب جديد:",
       "joinedCourse": "انضم إلى دورة {{course}}",
+      "teacherAdded": "تمت إضافة المعلم:",
+      "joinedTeam": "انضم إلى فريق التدريس",
       "paymentReceived": "تم استلام دفعة:",
       "paymentFrom": "من {{student}} (رسوم الدورة)",
       "groupCreated": "تم إنشاء مجموعة:",
@@ -89,6 +91,17 @@
       "error": "تعذر تحميل بيانات الداشبورد.",
       "retry": "حاول مرة أخرى",
       "empty": "لا توجد بيانات للعرض."
+    }
+  },
+  "forms": {
+    "cancel": "إلغاء",
+    "teacher": {
+      "name": "اسم المعلم",
+      "phone": "رقم الهاتف",
+      "specialty": "التخصص",
+      "submit": "إضافة المعلم",
+      "created": "تمت الإضافة",
+      "activityError": "تم حفظ المعلم، لكن تعذر تسجيله في النشاط الأخير."
     }
   }
 }

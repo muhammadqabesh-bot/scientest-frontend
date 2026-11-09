@@ -31,6 +31,8 @@ import { usePayments } from "../Hooks/usePayments";
 import { useGroups } from "../Hooks/useGroups";
 import { useActivities } from "../Hooks/useActivities";
 
+import AddTeacherForm from "./AddTeacherForm";
+
 const statsConfig = [
   {
     id: "students",
@@ -561,7 +563,7 @@ export default function Dashboard() {
         onClose={() => setActiveModal(null)}
         title={t("dashboard.quickActions.addTeacher.title")}
       >
-        <p>تجربة</p>
+        <AddTeacherForm onClose={() => setActiveModal(null)} />
       </Modal>
 
       <Modal

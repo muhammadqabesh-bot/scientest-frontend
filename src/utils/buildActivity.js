@@ -69,6 +69,20 @@ export function buildActivity(activity, lookups) {
       };
     }
 
+    case "teacherAdded": {
+      const teacher = teachersById.get(String(activity.teacherId));
+
+      return {
+        id: activity.id,
+        initials: getInitials(teacher?.name),
+        tone: "green",
+        titleKey: "dashboard.activities.teacherAdded",
+        name: teacher?.name ?? "—",
+        detailKey: "dashboard.activities.joinedTeam",
+        detailValues: {},
+      };
+    }
+
     default:
       return null;
   }

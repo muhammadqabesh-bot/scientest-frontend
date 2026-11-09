@@ -1,122 +1,149 @@
 {
   "teachers": [
     {
-      "id": 1,
+      "id": "1",
       "name": "أحمد علي",
       "subject": "الرياضيات",
       "phone": "0991000001"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "سارة نور",
       "subject": "الفيزياء",
       "phone": "0991000002"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "عمر خالد",
       "subject": "الكيمياء",
       "phone": "0991000003"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "رامي حسن",
       "subject": "الأحياء",
       "phone": "0991000004"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "لينا سمير",
       "subject": "اللغة العربية",
       "phone": "0991000005"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "يوسف مراد",
       "subject": "اللغة الإنجليزية",
       "phone": "0991000006"
+    },
+    {
+      "name": "محمد",
+      "phone": "0999323211",
+      "specialty": "علوم حاسوب",
+      "id": "tFRZvCpiSx4"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "991712400",
+      "specialty": "علوم حاسوب",
+      "id": "lFcQjrU4zoY"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "dsds",
+      "specialty": "sdsd",
+      "id": "W8ftivkJJu8"
+    },
+    {
+      "name": "sdsds",
+      "phone": "332312",
+      "specialty": "212",
+      "id": "Zoo5xk8t1bQ"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "991712400",
+      "specialty": "علوم حاسوب",
+      "id": "GeEGVo7MXXM"
     }
   ],
-
   "courses": [
     {
-      "id": 1,
+      "id": "1",
       "name": "الرياضيات",
       "level": "الصف العاشر",
       "teacherId": 1,
       "isActive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "الفيزياء",
       "level": "الصف الحادي عشر",
       "teacherId": 2,
       "isActive": true
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "الكيمياء",
       "level": "الصف الحادي عشر",
       "teacherId": 3,
       "isActive": true
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "الأحياء",
       "level": "الصف الثاني عشر",
       "teacherId": 4,
       "isActive": true
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "اللغة العربية",
       "level": "الصف التاسع",
       "teacherId": 5,
       "isActive": true
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "اللغة الإنجليزية",
       "level": "الصف العاشر",
       "teacherId": 6,
       "isActive": true
     }
   ],
-
   "groups": [
     {
-      "id": 1,
+      "id": "1",
       "name": "مجموعة الرياضيات - أ",
       "courseId": 1,
       "teacherId": 1,
       "createdAt": "2026-10-20T09:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "مجموعة الفيزياء - أ",
       "courseId": 2,
       "teacherId": 2,
       "createdAt": "2026-10-22T10:30:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "مجموعة الكيمياء - ب",
       "courseId": 3,
       "teacherId": 3,
       "createdAt": "2026-10-25T11:00:00Z"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "مجموعة اللغة الإنجليزية - أ",
       "courseId": 6,
       "teacherId": 6,
       "createdAt": "2026-11-04T06:00:00Z"
     }
   ],
-
   "students": [
     {
-      "id": 1,
+      "id": "1",
       "name": "كريم تمر",
       "phone": "0992000001",
       "courseId": 1,
@@ -124,7 +151,7 @@
       "createdAt": "2026-11-04T08:50:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "ليلى حسن",
       "phone": "0992000002",
       "courseId": 2,
@@ -132,7 +159,7 @@
       "createdAt": "2026-10-18T10:00:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "محمد الخطيب",
       "phone": "0992000003",
       "courseId": 1,
@@ -140,7 +167,7 @@
       "createdAt": "2026-10-19T09:15:00Z"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "نور الدين",
       "phone": "0992000004",
       "courseId": 3,
@@ -148,7 +175,7 @@
       "createdAt": "2026-10-21T12:00:00Z"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "هبة سعيد",
       "phone": "0992000005",
       "courseId": 4,
@@ -156,7 +183,7 @@
       "createdAt": "2026-10-23T14:30:00Z"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "عبد الله منصور",
       "phone": "0992000006",
       "courseId": 6,
@@ -164,7 +191,7 @@
       "createdAt": "2026-10-26T16:00:00Z"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "رهف العمر",
       "phone": "0992000007",
       "courseId": 5,
@@ -172,7 +199,7 @@
       "createdAt": "2026-10-28T09:45:00Z"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "طارق فياض",
       "phone": "0992000008",
       "courseId": 2,
@@ -180,7 +207,7 @@
       "createdAt": "2026-10-30T11:20:00Z"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "دانة يوسف",
       "phone": "0992000009",
       "courseId": 3,
@@ -188,7 +215,7 @@
       "createdAt": "2026-11-01T10:10:00Z"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "سامر عيسى",
       "phone": "0992000010",
       "courseId": 6,
@@ -196,10 +223,9 @@
       "createdAt": "2026-11-02T13:00:00Z"
     }
   ],
-
   "payments": [
     {
-      "id": 1,
+      "id": "1",
       "studentId": 2,
       "courseId": 2,
       "amount": 150,
@@ -207,7 +233,7 @@
       "paidAt": "2026-11-04T08:25:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "studentId": 1,
       "courseId": 1,
       "amount": 120,
@@ -215,7 +241,7 @@
       "paidAt": "2026-11-03T12:00:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "studentId": 4,
       "courseId": 3,
       "amount": 130,
@@ -223,10 +249,9 @@
       "paidAt": "2026-11-02T15:30:00Z"
     }
   ],
-
   "schedule": [
     {
-      "id": 1,
+      "id": "1",
       "day": "friday",
       "time": "21:00",
       "courseId": 1,
@@ -234,7 +259,7 @@
       "room": "مخبر 1"
     },
     {
-      "id": 2,
+      "id": "2",
       "day": "friday",
       "time": "11:30",
       "courseId": 2,
@@ -242,7 +267,7 @@
       "room": "قاعة 204"
     },
     {
-      "id": 3,
+      "id": "3",
       "day": "friday",
       "time": "14:00",
       "courseId": 3,
@@ -250,7 +275,7 @@
       "room": "مخبر 3"
     },
     {
-      "id": 4,
+      "id": "4",
       "day": "friday",
       "time": "16:30",
       "courseId": 6,
@@ -258,27 +283,33 @@
       "room": "قاعة 102"
     }
   ],
-
   "activities": [
     {
-      "id": 1,
+      "id": "1",
       "type": "studentRegistered",
       "studentId": 1,
       "courseId": 1,
       "createdAt": "2026-11-04T08:50:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "type": "paymentReceived",
       "paymentId": 1,
       "createdAt": "2026-11-04T08:25:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "type": "groupCreated",
       "groupId": 4,
       "teacherId": 6,
       "createdAt": "2026-11-04T06:00:00Z"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "GeEGVo7MXXM",
+      "createdAt": "2026-11-09T18:45:52.493Z",
+      "id": "Ir_TMdWmuBI"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
