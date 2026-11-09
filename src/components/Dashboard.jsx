@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 import Card from "./ui/Card";
+import StateMessage from "./ui/StateNessege";
 import { useSchedule } from "../Hooks/useSchedule";
 import { useTeachers } from "../Hooks/useTeachers";
 import { useCourses } from "../Hooks/useCourses";
@@ -29,7 +30,6 @@ import { useActivities } from "../Hooks/useActivities";
 
 import { p } from "motion/react-client";
 
-/* إعداد الكروت الثابت: الرقم (value) يُحسب داخل المكوّن من البيانات */
 const statsConfig = [
   {
     id: "students",
@@ -57,7 +57,6 @@ const statsConfig = [
   },
 ];
 
-/* الإجراءات السريعة: عناصر ثابتة في الواجهة وليست بيانات سيرفر */
 const quickActions = [
   {
     id: "addStudent",
@@ -85,7 +84,6 @@ const quickActions = [
   },
 ];
 
-/* ألوان أيقونات النشاط حسب النوع */
 const toneClasses = {
   green: "bg-status-success-bg text-status-success-text",
   gold: "bg-accent-50 text-accent-600",
@@ -102,7 +100,6 @@ const iconMap = {
   CreditCard,
 };
 
-/* حركة دخول البطاقة */
 const itemVariants = {
   hidden: {
     opacity: 0,
@@ -120,7 +117,6 @@ const itemVariants = {
   },
 };
 
-/* إنشاء تدرّج دخول بين البطاقات */
 function createStaggerVariants(delayChildren, staggerChildren) {
   return {
     hidden: { opacity: 1 },
@@ -134,7 +130,6 @@ function createStaggerVariants(delayChildren, staggerChildren) {
   };
 }
 
-/* نسخ ثابتة للحركة عند اختيار تقليل الحركة في الجهاز */
 const reducedItemVariants = {
   hidden: { opacity: 1, y: 0, scale: 1 },
   visible: { opacity: 1, y: 0, scale: 1 },
@@ -208,7 +203,6 @@ export default function Dashboard() {
     [activities],
   );
 
-  /* الأرقام تُحسب من البيانات الفعلية */
   const counts = {
     students: students.length,
     teachers: teachers.length,
@@ -221,7 +215,6 @@ export default function Dashboard() {
     value: counts[item.id],
   }));
 
-  /* قواميس بحث سريعة لتحويل الـ id إلى كائن (اسم الدورة / المعلم) */
   const coursesById = useMemo(
     () => new Map(courses.map((course) => [String(course.id), course])),
     [courses],
@@ -277,7 +270,6 @@ export default function Dashboard() {
 
   return (
     <main dir="rtl" className="space-y-7 p-5 md:p-7">
-      {/* الترحيب */}
       <motion.section
         variants={cardMotion}
         initial={reduceMotion ? false : "hidden"}
@@ -295,7 +287,6 @@ export default function Dashboard() {
         </div>
       </motion.section>
 
-      {/* كروت الإحصائيات */}
       <motion.section
         variants={reduceMotion ? undefined : statsStagger}
         initial={reduceMotion ? false : "hidden"}
@@ -343,7 +334,6 @@ export default function Dashboard() {
         })}
       </motion.section>
 
-      {/* الإجراءات السريعة */}
       <motion.section
         variants={reduceMotion ? undefined : actionsStagger}
         initial={reduceMotion ? false : "hidden"}
@@ -375,7 +365,6 @@ export default function Dashboard() {
                   size="md"
                   className="group h-full w-full text-right"
                 >
-                  {/* TODO (أنت): أضف onClick هنا لفتح المودال المناسب */}
                   <div className="flex items-center gap-3">
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-600 transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110 group-hover:bg-accent-100">
                       <Icon className="h-5 w-5" aria-hidden="true" />
@@ -405,14 +394,12 @@ export default function Dashboard() {
         </div>
       </motion.section>
 
-      {/* الجدول والنشاط */}
       <motion.section
         variants={reduceMotion ? undefined : panelsStagger}
         initial={reduceMotion ? false : "hidden"}
         animate="visible"
         className="grid grid-cols-1 gap-5 xl:grid-cols-2"
       >
-        {/* جدول اليوم */}
         <motion.div variants={cardMotion}>
           <Card size="md" className="h-full">
             <div className="mb-4 flex items-center justify-between gap-3">
@@ -427,16 +414,10 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {isLoading && (
-              <p className="py-6 text-center text-sm text-text-muted">
-                جارٍ التحميل...
-              </p>
-            )}
+            {isLoading && <StateMessage>جاري التحميل ...</StateMessage>}
 
             {isError && (
-              <p className="py-6 text-center text-sm text-danger">
-                تعذّر تحميل الجدول
-              </p>
+              <StateMessage tone="danger">تعذّر تحميل الجدول</StateMessage>
             )}
             {!isLoading && !isError && schedule.length === 0 && (
               <p className="py-6 text-center text-sm text-text-muted">
@@ -498,7 +479,6 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* النشاط الأخير */}
         <motion.div variants={cardMotion}>
           <Card size="md" className="h-full">
             <div className="mb-3 flex items-start justify-between gap-3">
@@ -512,7 +492,6 @@ export default function Dashboard() {
                 </p>
               </div>
 
-              {/* TODO (أنت): أضف وظيفة هذا الزر */}
               <button
                 type="button"
                 className="text-xs font-medium text-accent-600 transition-colors hover:text-primary-700"
@@ -520,38 +499,50 @@ export default function Dashboard() {
                 {t("dashboard.viewAll")}
               </button>
             </div>
+            {activitiesLoading && <StateMessage>جارٍ التحميل...</StateMessage>}
+            {activitiesError && (
+              <StateMessage tone="danger">تعذّر تحميل النشاط</StateMessage>
+            )}
+            {!activitiesLoading &&
+              !activitiesError &&
+              activityItems.length === 0 && (
+                <StateMessage>لا يوجد انشطة بعد </StateMessage>
+              )}
+            {!activitiesLoading &&
+              !activitiesError &&
+              activityItems.length > 0 && (
+                <ul className="divide-y divide-border-subtle">
+                  {activityItems.map((activity) => (
+                    <li
+                      key={activity.id}
+                      className="flex items-center gap-3 py-3 first:pt-2 last:pb-0"
+                    >
+                      <span
+                        className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-xs font-semibold ${toneClasses[activity.tone] ?? toneClasses.gray}`}
+                      >
+                        {activity.initials}
+                      </span>
 
-            <ul className="divide-y divide-border-subtle">
-              {activityItems.map((activity) => (
-                <li
-                  key={activity.id}
-                  className="flex items-center gap-3 py-3 first:pt-2 last:pb-0"
-                >
-                  <span
-                    className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl text-xs font-semibold ${toneClasses[activity.tone] ?? toneClasses.gray}`}
-                  >
-                    {activity.initials}
-                  </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm text-text-secondary">
+                          {t(activity.titleKey)}{" "}
+                          <strong className="font-semibold text-text-primary">
+                            {activity.name}
+                          </strong>
+                        </span>
 
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm text-text-secondary">
-                      {t(activity.titleKey)}{" "}
-                      <strong className="font-semibold text-text-primary">
-                        {activity.name}
-                      </strong>
-                    </span>
+                        <span className="mt-1 block text-xs text-text-muted">
+                          {t(activity.detailKey, activity.detailValues)}
+                        </span>
+                      </span>
 
-                    <span className="mt-1 block text-xs text-text-muted">
-                      {t(activity.detailKey, activity.detailValues)}
-                    </span>
-                  </span>
-
-                  <span className="shrink-0 text-xs text-text-muted">
+                      {/* <span className="shrink-0 text-xs text-text-muted">
                     {t(activity.timeKey, activity.timeValues)}
-                  </span>
-                </li>
-              ))}
-            </ul>
+                  </span> */}
+                    </li>
+                  ))}
+                </ul>
+              )}
           </Card>
         </motion.div>
       </motion.section>
