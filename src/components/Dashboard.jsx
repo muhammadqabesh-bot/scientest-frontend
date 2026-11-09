@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { buildActivity } from "../utils/buildActivity";
 import {
   animate,
   motion,
@@ -22,6 +23,10 @@ import { useSchedule } from "../Hooks/useSchedule";
 import { useTeachers } from "../Hooks/useTeachers";
 import { useCourses } from "../Hooks/useCourses";
 import { useStudents } from "../Hooks/useStudents";
+import { usePayments } from "../Hooks/usePayments";
+import { useGroups } from "../Hooks/useGroups";
+import { useActivities } from "../Hooks/useActivities";
+
 import { p } from "motion/react-client";
 
 /* إعداد الكروت الثابت: الرقم (value) يُحسب داخل المكوّن من البيانات */
@@ -77,43 +82,6 @@ const quickActions = [
     icon: "CreditCard",
     titleKey: "dashboard.quickActions.recordPayment.title",
     descriptionKey: "dashboard.quickActions.recordPayment.description",
-  },
-];
-
-/* TODO (أنت): النشاط الأخير ما زال وهميًا، اربطه بـ useActivities لاحقًا */
-const demoActivities = [
-  {
-    id: 1,
-    initials: "كت",
-    tone: "green",
-    titleKey: "dashboard.activities.studentRegistered",
-    name: "كريم تمر",
-    detailKey: "dashboard.activities.joinedCourse",
-    detailValues: { course: "تطوير الويب الشامل" },
-    timeKey: "dashboard.activities.minutesAgo",
-    timeValues: { count: 10 },
-  },
-  {
-    id: 2,
-    initials: "$$",
-    tone: "gold",
-    titleKey: "dashboard.activities.paymentReceived",
-    name: "$150.00",
-    detailKey: "dashboard.activities.paymentFrom",
-    detailValues: { student: "ليلى حسن" },
-    timeKey: "dashboard.activities.minutesAgo",
-    timeValues: { count: 35 },
-  },
-  {
-    id: 3,
-    initials: "مج",
-    tone: "gray",
-    titleKey: "dashboard.activities.groupCreated",
-    name: "React Next-4",
-    detailKey: "dashboard.activities.assignedTo",
-    detailValues: { teacher: "أحمد محمود" },
-    timeKey: "dashboard.activities.hoursAgo",
-    timeValues: { count: 2 },
   },
 ];
 
@@ -224,6 +192,21 @@ export default function Dashboard() {
   const { data: courses = [] } = useCourses();
   const { data: teachers = [] } = useTeachers();
   const { data: students = [] } = useStudents();
+  const { data: payments = [] } = usePayments();
+  const { data: groups = [] } = useGroups();
+  const {
+    data: activities = [],
+    isLoading: activitiesLoading,
+    isError: activitiesError,
+  } = useActivities();
+
+  const recentActivities = useMemo(
+    () =>
+      [...activities]
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 5),
+    [activities],
+  );
 
   /* الأرقام تُحسب من البيانات الفعلية */
   const counts = {
@@ -248,6 +231,40 @@ export default function Dashboard() {
     () => new Map(teachers.map((teacher) => [String(teacher.id), teacher])),
     [teachers],
   );
+
+  const studentsById = useMemo(
+    () => new Map(students.map((s) => [String(s.id), s])),
+    [students],
+  );
+  const paymentsById = useMemo(
+    () => new Map(payments.map((p) => [String(p.id), p])),
+    [payments],
+  );
+  const groupsById = useMemo(
+    () => new Map(groups.map((g) => [String(g.id), g])),
+    [groups],
+  );
+
+  const activityItems = useMemo(() => {
+    const lookups = {
+      studentsById,
+      coursesById,
+      teachersById,
+      paymentsById,
+      groupsById,
+    };
+
+    return recentActivities
+      .map((activity) => buildActivity(activity, lookups))
+      .filter(Boolean);
+  }, [
+    recentActivities,
+    studentsById,
+    coursesById,
+    teachersById,
+    paymentsById,
+    groupsById,
+  ]);
 
   const cardMotion = reduceMotion ? reducedItemVariants : itemVariants;
 
@@ -505,7 +522,7 @@ export default function Dashboard() {
             </div>
 
             <ul className="divide-y divide-border-subtle">
-              {demoActivities.map((activity) => (
+              {activityItems.map((activity) => (
                 <li
                   key={activity.id}
                   className="flex items-center gap-3 py-3 first:pt-2 last:pb-0"
