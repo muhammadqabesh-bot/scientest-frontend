@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { buildActivity } from "../utils/buildActivity";
 import {
@@ -16,10 +16,13 @@ import {
   UserRoundPlus,
   Users,
   UsersRound,
+  X,
 } from "lucide-react";
 
 import Card from "./ui/Card";
 import StateMessage from "./ui/StateNessege";
+import Modal from "./ui/Modal";
+
 import { useSchedule } from "../Hooks/useSchedule";
 import { useTeachers } from "../Hooks/useTeachers";
 import { useCourses } from "../Hooks/useCourses";
@@ -27,8 +30,6 @@ import { useStudents } from "../Hooks/useStudents";
 import { usePayments } from "../Hooks/usePayments";
 import { useGroups } from "../Hooks/useGroups";
 import { useActivities } from "../Hooks/useActivities";
-
-import { p } from "motion/react-client";
 
 const statsConfig = [
   {
@@ -178,6 +179,8 @@ export default function Dashboard() {
   const { t } = useTranslation();
   const prefersReducedMotion = useReducedMotion();
   const reduceMotion = Boolean(prefersReducedMotion);
+
+  const [activeModal, setActiveModal] = useState(null);
 
   const today = new Date()
     .toLocaleDateString("er", { weekday: "long" })
@@ -359,6 +362,7 @@ export default function Dashboard() {
                 variants={cardMotion}
                 {...hoverMotion}
                 className="h-full"
+                onClick={() => setActiveModal(action.id)}
               >
                 <Card
                   variant="interactive"
@@ -420,9 +424,7 @@ export default function Dashboard() {
               <StateMessage tone="danger">تعذّر تحميل الجدول</StateMessage>
             )}
             {!isLoading && !isError && schedule.length === 0 && (
-              <p className="py-6 text-center text-sm text-text-muted">
-                لا يوجد حصص اليوم
-              </p>
+              <StateMessage>لا يوجد حصص اليوم</StateMessage>
             )}
             {!isLoading && !isError && schedule.length > 0 && (
               <div className="overflow-x-auto">
@@ -546,6 +548,37 @@ export default function Dashboard() {
           </Card>
         </motion.div>
       </motion.section>
+      <Modal
+        isOpen={activeModal === "addStudent"}
+        onClose={() => setActiveModal(null)}
+        title={t("dashboard.quickActions.addStudent.title")}
+      >
+        <p>تجربة</p>
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "addTeacher"}
+        onClose={() => setActiveModal(null)}
+        title={t("dashboard.quickActions.addTeacher.title")}
+      >
+        <p>تجربة</p>
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "createGroup"}
+        onClose={() => setActiveModal(null)}
+        title={t("dashboard.quickActions.createGroup.title")}
+      >
+        <p>تجربة</p>
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "recordPayment"}
+        onClose={() => setActiveModal(null)}
+        title={t("dashboard.quickActions.recordPayment.title")}
+      >
+        <p>تجربة</p>
+      </Modal>
     </main>
   );
 }
