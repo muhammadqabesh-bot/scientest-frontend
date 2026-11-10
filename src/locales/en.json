@@ -3,5 +3,27 @@
     "open_menu": "Open menu",
     "close_menu": "Close menu",
     "logout": "Log out"
+  },
+  "forms": {
+    "group": {
+      "name": "Group name",
+      "course": "Course",
+      "teacher": "Teacher",
+      "selectCourse": "Select a course",
+      "selectTeacher": "Select a teacher",
+      "submit": "Create group",
+      "created": "Group created",
+      "activityError": "The group was created, but its activity could not be recorded."
+    },
+    "payment": {
+      "student": "Student",
+      "amount": "Amount",
+      "date": "Payment date",
+      "note": "Note",
+      "selectStudent": "Select a student",
+      "submit": "Record payment",
+      "created": "Payment recorded",
+      "activityError": "The payment was recorded, but its activity could not be saved."
+    }
   }
 }

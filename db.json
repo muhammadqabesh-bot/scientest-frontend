@@ -65,6 +65,36 @@
       "phone": "991712400",
       "specialty": "علوم حاسوب",
       "id": "GeEGVo7MXXM"
+    },
+    {
+      "name": "تيست",
+      "phone": "90933",
+      "specialty": "علوم",
+      "id": "6fqX1JD1lh0"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "991712400",
+      "specialty": "علوم حاسوب",
+      "id": "zsZ8RSvvnj0"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "991712400",
+      "specialty": "sdsd",
+      "id": "6ZH8VWNrQjE"
+    },
+    {
+      "name": "برتان",
+      "phone": "0912121",
+      "specialty": "نصاب ",
+      "id": "M4EwJUJL5AQ"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "0999323211",
+      "specialty": "علوم حاسوب",
+      "id": "PDC21p0-huk"
     }
   ],
   "courses": [
@@ -139,6 +169,12 @@
       "courseId": 6,
       "teacherId": 6,
       "createdAt": "2026-11-04T06:00:00Z"
+    },
+    {
+      "name": "مجموعة1",
+      "courseId": "1",
+      "teacherId": "6fqX1JD1lh0",
+      "id": "6jAupxp9HsM"
     }
   ],
   "students": [
@@ -221,6 +257,20 @@
       "courseId": 6,
       "groupId": 4,
       "createdAt": "2026-11-02T13:00:00Z"
+    },
+    {
+      "name": "Muhammad",
+      "phone": "0999323211",
+      "guardian": "احمد",
+      "courseId": "3",
+      "id": "1JKeHMe7iAo"
+    },
+    {
+      "name": "Muhammad Qabesh",
+      "phone": "991712499",
+      "guardian": "احمد",
+      "courseId": "2",
+      "id": "3x8h5VWzNWg"
     }
   ],
   "payments": [
@@ -247,6 +297,13 @@
       "amount": 130,
       "currency": "USD",
       "paidAt": "2026-11-02T15:30:00Z"
+    },
+    {
+      "studentId": "1",
+      "amount": 500,
+      "date": "2026-11-10",
+      "note": "ولاشي",
+      "id": "8utCCHCrlkY"
     }
   ],
   "schedule": [
@@ -309,6 +366,61 @@
       "teacherId": "GeEGVo7MXXM",
       "createdAt": "2026-11-09T18:45:52.493Z",
       "id": "Ir_TMdWmuBI"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "6fqX1JD1lh0",
+      "createdAt": "2026-11-09T18:52:47.897Z",
+      "id": "-gDcDLpAHXI"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "zsZ8RSvvnj0",
+      "createdAt": "2026-11-09T18:57:28.117Z",
+      "id": "eijpAGmLLNs"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "6ZH8VWNrQjE",
+      "createdAt": "2026-11-09T18:57:41.735Z",
+      "id": "fsorrmSeYEc"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "M4EwJUJL5AQ",
+      "createdAt": "2026-11-09T19:57:57.695Z",
+      "id": "PB7UPHlmXXs"
+    },
+    {
+      "type": "studentAdded",
+      "studentId": "1JKeHMe7iAo",
+      "createdAt": "2026-11-10T16:42:48.844Z",
+      "id": "WprVXAhpbbE"
+    },
+    {
+      "type": "studentAdded",
+      "studentId": "3x8h5VWzNWg",
+      "createdAt": "2026-11-10T16:43:10.504Z",
+      "id": "bKxvuB473Uc"
+    },
+    {
+      "type": "teacherAdded",
+      "teacherId": "PDC21p0-huk",
+      "createdAt": "2026-11-10T16:43:16.739Z",
+      "id": "zD6jtgqndew"
+    },
+    {
+      "type": "groupCreated",
+      "groupId": "6jAupxp9HsM",
+      "createdAt": "2026-11-10T16:49:10.263Z",
+      "id": "2jXbC7I3KJI"
+    },
+    {
+      "type": "paymentRecorded",
+      "paymentId": "8utCCHCrlkY",
+      "studentId": "1",
+      "createdAt": "2026-11-10T16:49:26.822Z",
+      "id": "oLIy86OQfo4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

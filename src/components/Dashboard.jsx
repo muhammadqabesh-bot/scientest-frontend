@@ -32,6 +32,9 @@ import { useGroups } from "../Hooks/useGroups";
 import { useActivities } from "../Hooks/useActivities";
 
 import AddTeacherForm from "./AddTeacherForm";
+import AddStudentForm from "./AddStudentForm";
+import AddGroupForm from "./AddGroupForm";
+import AddPaymentForm from "./AddPaymentForm";
 
 const statsConfig = [
   {
@@ -555,7 +558,7 @@ export default function Dashboard() {
         onClose={() => setActiveModal(null)}
         title={t("dashboard.quickActions.addStudent.title")}
       >
-        <p>تجربة</p>
+        <AddStudentForm onClose={() => setActiveModal(null)} />
       </Modal>
 
       <Modal
@@ -571,7 +574,7 @@ export default function Dashboard() {
         onClose={() => setActiveModal(null)}
         title={t("dashboard.quickActions.createGroup.title")}
       >
-        <p>تجربة</p>
+        <AddGroupForm onClose={() => setActiveModal(null)} />
       </Modal>
 
       <Modal
@@ -579,7 +582,7 @@ export default function Dashboard() {
         onClose={() => setActiveModal(null)}
         title={t("dashboard.quickActions.recordPayment.title")}
       >
-        <p>تجربة</p>
+        <AddPaymentForm onClose={() => setActiveModal(null)} />
       </Modal>
     </main>
   );

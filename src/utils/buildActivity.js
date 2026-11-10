@@ -24,9 +24,12 @@ export function buildActivity(activity, lookups) {
     lookups;
 
   switch (activity.type) {
+    case "studentAdded":
     case "studentRegistered": {
       const student = studentsById.get(String(activity.studentId));
-      const course = coursesById.get(String(activity.courseId));
+      const course = coursesById.get(
+        String(activity.courseId ?? student?.courseId),
+      );
 
       return {
         id: activity.id,
@@ -39,9 +42,12 @@ export function buildActivity(activity, lookups) {
       };
     }
 
-    case "paymentReceived": {
+    case "paymentReceived":
+    case "paymentRecorded": {
       const payment = paymentsById.get(String(activity.paymentId));
-      const student = studentsById.get(String(payment?.studentId));
+      const student = studentsById.get(
+        String(payment?.studentId ?? activity.studentId),
+      );
 
       return {
         id: activity.id,
@@ -56,7 +62,9 @@ export function buildActivity(activity, lookups) {
 
     case "groupCreated": {
       const group = groupsById.get(String(activity.groupId));
-      const teacher = teachersById.get(String(activity.teacherId));
+      const teacher = teachersById.get(
+        String(group?.teacherId ?? activity.teacherId),
+      );
 
       return {
         id: activity.id,
